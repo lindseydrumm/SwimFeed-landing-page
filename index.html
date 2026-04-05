@@ -1,0 +1,1349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SwimFeed - Your Competitive Swimming Hub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #22D3EE;
+            --primary-dark: #06B6D4;
+            --secondary: #22D3EE;
+            --accent: #22D3EE;
+            --bg: #0f172a;
+            --bg-elevated: #1e293b;
+            --bg-card: #1e293b;
+            --text: #FFFFFF;
+            --text-muted: #94a3b8;
+            --border: #334155;
+        }
+
+        body {
+            font-family: 'Archivo', -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.4;
+            background:
+                radial-gradient(circle at 20% 30%, rgba(0, 102, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(0, 201, 255, 0.1) 0%, transparent 50%);
+        }
+
+        .lanes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .lane {
+            position: absolute;
+            width: 3px;
+            height: 100%;
+            background: linear-gradient(180deg, transparent, var(--primary), transparent);
+            opacity: 0.1;
+            animation: shimmer 3s ease-in-out infinite;
+        }
+
+        .lane:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .lane:nth-child(2) { left: 25%; animation-delay: 0.5s; }
+        .lane:nth-child(3) { left: 40%; animation-delay: 1s; }
+        .lane:nth-child(4) { left: 55%; animation-delay: 1.5s; }
+        .lane:nth-child(5) { left: 70%; animation-delay: 2s; }
+        .lane:nth-child(6) { left: 85%; animation-delay: 2.5s; }
+
+        @keyframes shimmer {
+            0%, 100% { opacity: 0.05; }
+            50% { opacity: 0.15; }
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header */
+        header {
+            padding: 30px 0;
+            border-bottom: 1px solid var(--border);
+            backdrop-filter: blur(10px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 14, 26, 0.8);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            font-size: 28px;
+            width: 32px;
+            height: 32px;
+            position: relative;
+        }
+        
+        .logo-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo-text {
+            color: var(--text);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .logo-text span {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+        
+        .logo-text .live {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        nav a:hover {
+            color: var(--text);
+        }
+
+        .cta-button {
+            background: var(--primary);
+            color: var(--text);
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 102, 255, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 120px 0 100px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            letter-spacing: -2px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero .gradient-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 22px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto 40px;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .secondary-button {
+            background: transparent;
+            color: var(--text);
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            border: 2px solid var(--border);
+            transition: all 0.3s;
+        }
+
+        .secondary-button:hover {
+            border-color: var(--primary);
+            background: rgba(0, 102, 255, 0.1);
+        }
+
+        /* Feature Showcase */
+        .feature-showcase {
+            padding: 80px 0;
+        }
+
+        .showcase-item {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            margin-bottom: 120px;
+        }
+
+        .showcase-item:nth-child(even) {
+            direction: rtl;
+        }
+
+        .showcase-item:nth-child(even) > * {
+            direction: ltr;
+        }
+        
+        .showcase-feature-item:nth-child(1) {
+            padding-left: 0px;
+        }
+
+        .showcase-feature-item:nth-child(2) {
+            padding-left: 40px;
+        }
+
+        .showcase-feature-item:nth-child(3) {
+            padding-left: 80px;
+        }
+
+        .showcase-feature-item:nth-child(4) {
+            padding-left: 120px;
+        }
+
+        .showcase-content h3 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+
+        .showcase-content p {
+            font-size: 18px;
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 24px;
+        }
+
+        .showcase-features {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .showcase-feature-item {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            color: var(--text-muted);
+            font-size: 20px;
+        }
+
+        .showcase-feature-item::before {
+            content: '✓';
+            width: 24px;
+            height: 24px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: bold;
+            flex-shrink: 0;
+            color: white;
+        }
+
+        .showcase-visual {
+            position: relative;
+        }
+
+        .app-mockup {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+            transition: all 0.3s;
+        }
+
+        .app-mockup:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 40px 80px rgba(0, 102, 255, 0.3);
+        }
+
+        /* Athlete Profile Mockup */
+        .athlete-profile {
+            text-align: center;
+        }
+
+        .athlete-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            margin: 0 auto 24px;
+            position: relative;
+            border: 3px solid var(--border);
+            overflow: hidden; /* Keep overflow hidden on the container */
+        }
+
+        .athlete-avatar-wrapper {
+            width: 120px;
+            height: 200px; /* Taller wrapper to allow head to pop out */
+            margin: 0 auto 24px;
+            position: relative;
+            display: flex;
+            align-items: flex-end; /* Align to bottom */
+        }
+
+        .athlete-avatar-wrapper .athlete-avatar {
+            margin: 0; /* Remove margin since wrapper handles it */
+        }
+
+        .athlete-avatar img {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            height: 100%; /* Taller image */
+            width: auto;
+            object-fit: cover;
+            object-position: center bottom;
+        }
+
+        .athlete-name {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .athlete-tags {
+            display: flex;
+            gap: 8px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .athlete-tag {
+            padding: 6px 14px;
+            background: rgba(0, 102, 255, 0.15);
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: #22D3EE;
+        }
+
+        .follow-btn {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            padding: 10px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .follow-btn:hover {
+            background: var(--primary);
+            color: var(--text);
+        }
+
+        .athlete-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .athlete-stat {
+            background: var(--bg-elevated);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .athlete-stat-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+
+        .athlete-stat-label {
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Results Mockup */
+        .results-table {
+            width: 100%;
+        }
+
+        .result-row {
+            display: grid;
+            grid-template-columns: 60px 1fr 120px 100px;
+            gap: 16px;
+            align-items: center;
+            padding: 16px;
+            background: var(--bg-elevated);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+
+        .result-row:hover {
+            background: var(--bg-card);
+            transform: translateX(5px);
+        }
+
+        .result-place {
+            font-size: 24px;
+            font-weight: 700;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .result-place.first { color: #FFD700; }
+        .result-place.second { color: #C0C0C0; }
+        .result-place.third { color: #CD7F32; }
+
+        .result-swimmer {
+            font-weight: 600;
+        }
+
+        .result-country {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        .result-time {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .result-badge {
+            padding: 4px 4px;
+            color: #FFD700;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-left: 8px;
+        }
+
+        .result-improvement {
+            color: #00FF88;
+            font-size: 13px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+        
+        .result-add {
+            color: #FF2C2C;
+            font-size: 13px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Meet Card Mockup */
+        .meet-card {
+            background: var(--bg-elevated);
+            border-radius: 16px;
+            padding: 32px;
+            margin-bottom: 16px;
+        }
+
+        .meet-badge {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(0, 201, 255, 0.2);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--secondary);
+            margin-bottom: 16px;
+        }
+
+        .meet-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .meet-meta {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .meet-meta span {
+            margin-right: 20px;
+        }
+
+        .watch-info {
+            background: rgba(0, 102, 255, 0.1);
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+        }
+
+        .watch-info-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--secondary);
+        }
+
+        .session-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 100px 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 16px;
+            letter-spacing: -1px;
+        }
+
+        .section-header p {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 50px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0, 102, 255, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 24px;
+        }
+
+        .feature-card h3 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 16px;
+            line-height: 1.7;
+            margin-bottom: 20px;
+        }
+
+        .feature-tag {
+            display: inline-block;
+            padding: 6px 14px;
+            background: rgba(0, 102, 255, 0.15);
+            border: 1px solid rgba(0, 102, 255, 0.3);
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Phone Mockup for Notifications */
+        .live-preview {
+            padding: 100px 0;
+            text-align: center;
+        }
+         
+        .live-preview h3 {
+            font-size: 42px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            letter-spacing: -1px;
+        }
+         
+        .live-preview p {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 60px;
+        }
+         
+        .phone-mockup {
+            width: 375px;
+            height: 812px;
+            background: #000;
+            border-radius: 55px;
+            padding: 14px;
+            margin: 0 auto;
+            box-shadow:
+                0 0 0 2px #0a0a0a,
+                0 0 0 6px #1a1a1a,
+                0 50px 100px rgba(0, 0, 0, 0.6),
+                0 20px 50px rgba(0, 0, 0, 0.4);
+            position: relative;
+            border: 8px solid #1a1a1a;
+            transform: rotateX(2deg) rotateY(-3deg);
+            transition: transform 0.3s ease;
+        }
+         
+        .phone-notch {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 140px;
+            height: 28px;
+            background: #000;
+            border-radius: 0 0 20px 20px;
+            z-index: 10;
+            box-shadow: inset 0 -2px 4px rgba(255, 255, 255, 0.05);
+        }
+         
+        .phone-screen {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, var(--bg) 45%, black 100%);
+            border-radius: 42px;
+            overflow: hidden;
+            position: relative;
+        }
+         
+        .phone-statusbar {
+            height: 44px;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text);
+        }
+        
+        .phone-wallpaper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(135deg, rgba(34, 211, 238, 0.15) 0%, rgba(6, 182, 212, 0.05) 100%),
+                linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
+            opacity: 0.9;
+        }
+         
+        .phone-statusbar {
+            height: 54px;
+            padding: 8px 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            font-size: 15px;
+            font-weight: 600;
+            color: #fff;
+            position: relative;
+            z-index: 5;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+        }
+         
+        .notifications-time {
+            position: absolute;
+            top: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 90px;
+            font-weight: 300;
+            color: #fff;
+            z-index: 1;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            letter-spacing: -2px;
+        }
+  
+        .notifications-date {
+            position: absolute;
+            top: 145px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            font-size: 17px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.85);
+            z-index: 1;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .notifications-container {
+            padding: 190px 16px 20px;
+            display: flex;
+            top: 200px;
+            flex-direction: column;
+            gap: 10px;
+            position: relative;
+            z-index: 2;
+        }
+         
+        .notification {
+            background: rgba(30, 41, 59, 0.95);
+            border-radius: 0px;
+            padding: 12px 16px;
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%)
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow:
+                0 8px 32px rgba(0, 0, 0, 0.25),
+                inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            animation: notificationSlide 0.5s ease-out backwards;
+        }
+         
+        .notification:nth-child(1) { animation-delay: 0.2s; }
+        .notification:nth-child(2) { animation-delay: 0.4s; }
+        .notification:nth-child(3) { animation-delay: 0.6s; }
+        .notification:nth-child(4) { animation-delay: 0.8s; }
+         
+        .notification-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 6px;
+        }
+         
+        .notification-app-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #22D3EE, #06B6D4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+         
+        .notification-app-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            flex: 1;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            align-items: left
+        }
+         
+        .notification-time {
+            font-size: 12px;
+            color: var(--text-muted);
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+         
+        .notification-title {
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 4px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.3;
+        }
+         
+        .notification-body {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.4;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+         
+        @keyframes notificationSlide {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 0;
+            text-align: center;
+        }
+
+        .cta-section h2 {
+            font-size: 56px;
+            font-weight: 900;
+            margin-bottom: 24px;
+            letter-spacing: -1px;
+        }
+
+        .cta-section p {
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 60px 0;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: var(--text);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .showcase-item {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .showcase-item:nth-child(even) {
+                direction: ltr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 20px;
+            }
+
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+            }
+
+            .feature-card {
+                padding: 30px;
+            }
+
+            .section-header h2 {
+                font-size: 36px;
+            }
+
+            .cta-section h2 {
+                font-size: 40px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .showcase-content h3 {
+                font-size: 32px;
+            }
+
+            .app-mockup {
+                padding: 24px;
+            }
+
+            .athlete-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .result-row {
+                grid-template-columns: 40px 1fr 80px;
+                gap: 12px;
+                font-size: 14px;
+            }
+
+            .result-badge {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation">
+        <div class="lanes">
+            <div class="lane"></div>
+            <div class="lane"></div>
+            <div class="lane"></div>
+            <div class="lane"></div>
+            <div class="lane"></div>
+            <div class="lane"></div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <defs>
+                                <linearGradient id="waveGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                  <stop offset="0%" style="stop-color:#22D3EE;stop-opacity:1" />
+                                  <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:1" />
+                                </linearGradient>
+                            </defs>
+                            <!-- Wave design -->
+                            <path d="M4 16C4 16 8 10 12 10C16 10 16 16 20 16C24 16 28 10 28 10"
+                                stroke="url(#waveGradient)"
+                                stroke-width="3"
+                                stroke-linecap="round"
+                                fill="none"/>
+                            <path d="M4 22C4 22 8 16 12 16C16 16 16 22 20 22C24 22 28 16 28 16"
+                                stroke="url(#waveGradient)"
+                                stroke-width="3"
+                                stroke-linecap="round"
+                                fill="none"
+                                opacity="0.6"/>
+                                
+                            <!-- Bar chart -->
+                            <rect x="100" y="260" width="45" height="50" rx="8" fill="url(#waveGradient)"/>
+                            <rect x="180" y="210" width="45" height="100" rx="8" fill="url(#waveGradient)"/>
+                            <rect x="260" y="160" width="45" height="150" rx="8" fill="url(#waveGradient)"/>
+                            <rect x="340" y="110" width="45" height="200" rx="8" fill="url(#waveGradient)"/>
+                        </svg>
+                    </div>
+                    <div class="logo-text">Swim<span>Feed</span></div>
+                </div>
+                <nav>
+                    <a href="#features">Features</a>
+                    <a href="#database">Database</a>
+                    <a href="#pricing">Pricing</a>
+                    <button class="cta-button">Get Started</button>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1>Every race. Every record.<br><span class="gradient-text">Never miss a split.</span></h1>
+                <p>The complete competitive swimming platform for athletes, coaches, and fans.</p>
+                <div class="hero-cta">
+                    <button class="cta-button">Sign up</button>
+                    <a href="#features" class="secondary-button">Explore Features</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Showcase Section -->
+        <section class="feature-showcase">
+            <div class="container">
+                
+                <!-- Athlete Profiles -->
+                <div class="showcase-item">
+                    <div class="showcase-content">
+                        <h3>Follow the stars</h3>
+                        <div class="showcase-features">
+                            <div class="showcase-feature-item">Real-time race notifications</div>
+                            <div class="showcase-feature-item">Complete career statistics</div>
+                            <div class="showcase-feature-item">Performance analytics</div>
+                            <div class="showcase-feature-item">Personal records timeline</div>
+                        </div>
+                    </div>
+                    <div class="showcase-visual">
+                        <div class="app-mockup athlete-profile">
+                            <div class="athlete-avatar">
+                                <img src="https://www.pngmart.com/files/24/Leon-Marchand-PNG-Photos.png">
+                            </div>
+                            <div class="athlete-name">Léon Marchand</div>
+                            <div class="athlete-tags">
+                                <span class="athlete-tag">FRA</span>
+                                <span class="athlete-tag">IM</span>
+                                <span class="athlete-tag">Butterfly</span>
+                            </div>
+                            <button class="follow-btn">+ Follow</button>
+                            <div class="athlete-stats">
+                                <div class="athlete-stat">
+                                    <div class="athlete-stat-value">4</div>
+                                    <div class="athlete-stat-label">Olympic Golds</div>
+                                </div>
+                                <div class="athlete-stat">
+                                    <div class="athlete-stat-value">5</div>
+                                    <div class="athlete-stat-label">World Records</div>
+                                </div>
+                                <div class="athlete-stat">
+                                    <div class="athlete-stat-value">#1</div>
+                                    <div class="athlete-stat-label">World Rank</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Live Results -->
+                <div class="showcase-item">
+                    <div class="showcase-content">
+                        <h3>Results as they happen</h3>
+                        <div class="showcase-features">
+                            <div class="showcase-feature-item">Live timing and splits</div>
+                            <div class="showcase-feature-item">World record alerts</div>
+                            <div class="showcase-feature-item">Time improvements tracking</div>
+                            <div class="showcase-feature-item">Heat-by-heat updates</div>
+                        </div>
+                    </div>
+                    <div class="showcase-visual">
+                        <div class="app-mockup">
+                            <div class="meet-badge">LIVE NOW</div>
+                            <div class="meet-title">Women's 100m Butterfly - Final</div>
+                            <div class="results-table">
+                                <div class="result-row">
+                                    <div class="result-place first">1</div>
+                                    <div>
+                                        <div class="result-swimmer">Gretchen Walsh</div>
+                                        <div class="result-country">USA</div>
+                                    </div>
+                                    <div class="result-time">54.60</div>
+                                    <div>
+                                        <div class="result-badge">WR</div>
+                                        <div class="result-improvement">-0.35</div>
+                                    </div>
+                                </div>
+                                <div class="result-row">
+                                    <div class="result-place second">2</div>
+                                    <div>
+                                        <div class="result-swimmer">Torri Huske</div>
+                                        <div class="result-country">USA</div>
+                                    </div>
+                                    <div class="result-time">55.55</div>
+                                    <div>
+                                        <div class="result-add">+0.03</div>
+                                    </div>
+                                </div>
+                                <div class="result-row">
+                                    <div class="result-place third">3</div>
+                                    <div>
+                                        <div class="result-swimmer">Zhang Yufei</div>
+                                        <div class="result-country">CHN</div>
+                                    </div>
+                                    <div class="result-time">55.60</div>
+                                    <div>
+                                        <div class="result-improvement">-0.02</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Meet Tracking -->
+                <div class="showcase-item">
+                    <div class="showcase-content">
+                        <h3>Never miss a meet</h3>
+                        <div class="showcase-features">
+                            <div class="showcase-feature-item">Complete meet schedules</div>
+                            <div class="showcase-feature-item">Streaming links & TV times</div>
+                            <div class="showcase-feature-item">Psych sheets & heat sheets</div>
+                            <div class="showcase-feature-item">Event-by-event tracking</div>
+                        </div>
+                    </div>
+                    <div class="showcase-visual">
+                        <div class="app-mockup">
+                            <div class="meet-card">
+                                <div class="meet-badge">National Meet</div>
+                                <div class="meet-title">TYR Pro Swim Series - Sacramento</div>
+                                <div class="meet-meta">
+                                    <span>May 20 - 23, 2026</span>
+                                    <span>Sacramento, CA</span>
+                                    <span>LCM</span>
+                                </div>
+                                <button class="follow-btn">+ Follow Event</button>
+                                <div class="watch-info">
+                                    <div class="watch-info-title">📺 How to Watch</div>
+                                    <div class="session-item">
+                                        <span>Morning Heats</span>
+                                        <span>Peacock • 10:00 AM</span>
+                                    </div>
+                                    <div class="session-item">
+                                        <span>Evening Finals</span>
+                                        <span>NBC • 6:00 PM</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <section class="features" id="features">
+            <div class="container">
+                <div class="section-header">
+                    <h2><span style="color: white;">Built by swimmers,</span> <span style="color: var(--primary-dark);"> for swimmers </span> </h2>
+                    <p>Everything you need to stay ahead of the competition, in one platform</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h3>Athletes Database</h3>
+                        <p>Follow your favorite swimmers across all competitions. Get instant notifications when they race, track their progression, and analyze their performance trends over time.</p>
+                        <span class="feature-tag">Personalized</span>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Meets Tracking</h3>
+                        <p>Never miss a meet again. Follow competitions from NCAA championships to international events. Live results, heat sheets, and psych sheets all in one place.</p>
+                        <span class="feature-tag">Live Updates</span>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Records Archive</h3>
+                        <p>Comprehensive records database spanning every major swimming organization. World records, national records, conference records—all searchable and filterable by event, course, and era.</p>
+                        <span class="feature-tag">Historical Data</span>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Personalized Newsfeed</h3>
+                        <p>Your swimming news, curated. Based on the athletes and meets you follow, get a feed of what matters to you—race results, breaking news, and milestone achievements.</p>
+                        <span class="feature-tag">Smart Feed</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="live-preview">
+            <div class="container">
+                <h3>Updates that matter, instantly</h3>
+                <p>Get real-time notifications for every race, record, and result from the athletes and meets you follow</p>
+                
+                <div class="phone-mockup">
+                    <div class="phone-notch"></div>
+                    <div class="phone-screen">
+                        <div class="phone-wallpaper"></div>
+                        <div class="phone-statusbar"> </div>
+                        <div class="notifications-time">9:41</div>
+                        <div class="notifications-date">Saturday, April 4</div>
+                        <div class="notifications-container">
+                            <div class="notification">
+                                <div class="notification-header">
+                                    <div class="notification-app-icon">
+                                        
+                                    </div>
+                                    <div class="notification-app-name">SwimFeed</div>
+                                    <div class="notification-time">now</div>
+                                </div>
+                                <div class="notification-title"> New World Record!</div>
+                                <div class="notification-body">Gretchen Walsh just broke the 100m Butterfly WR with 54.87 at Pro Swim Series</div>
+                            </div>
+                            
+                            <div class="notification">
+                                <div class="notification-header">
+                                    <div class="notification-app-icon">🌊</div>
+                                    <div class="notification-app-name">SwimFeed</div>
+                                    <div class="notification-time">2m ago</div>
+                                </div>
+                                <div class="notification-title">Léon Marchand Racing Soon</div>
+                                <div class="notification-body">200m IM Final starts in 15 minutes • Heat 3, Lane 4. Tune in now!</div>
+                            </div>
+                            
+                            <div class="notification">
+                                <div class="notification-header">
+                                    <div class="notification-app-icon">🌊</div>
+                                    <div class="notification-app-name">SwimFeed</div>
+                                    <div class="notification-time">18m ago</div>
+                                </div>
+                                <div class="notification-title">Personal Best!</div>
+                                <div class="notification-body">Caeleb Dressel drops season-best 50m Free: 20.92 (-0.15 from previous)</div>
+                            </div>
+                            
+                            <div class="notification">
+                                <div class="notification-header">
+                                    <div class="notification-app-icon">🌊</div>
+                                    <div class="notification-app-name">SwimFeed</div>
+                                    <div class="notification-time">1h ago</div>
+                                </div>
+                                <div class="notification-title">TYR Pro Series Finals Live</div>
+                                <div class="notification-body">Day 3 Finals streaming now on ESPN • 12 of your followed athletes competing tonight</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Ready to dive in?</h2>
+                <button class="cta-button">Sign Up Today</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-links">
+                <a href="#">About</a>
+                <a href="#">Features</a>
+                <a href="#">Pricing</a>
+                <a href="#">API</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+            </div>
+            <p>&copy; 2026 SwimFeed. Built for the swimming community.</p>
+        </div>
+    </footer>
+</body>
+</html>
