@@ -988,7 +988,8 @@
         }
 
         /* Mailchimp form style overrides */
-        #mc_embed_signup {
+        #mc_embed_signup,
+        .mc_embed_signup_alt {
             background: transparent !important;
             clear: left;
             font: 14px 'Archivo', Helvetica, Arial, sans-serif;
@@ -997,27 +998,33 @@
             margin: 0 auto;
         }
 
-        #mc_embed_signup form {
+        #mc_embed_signup form,
+        .mc_embed_signup_alt form {
             padding: 0 !important;
             margin: 0 !important;
         }
 
         #mc_embed_signup .indicates-required,
-        #mc_embed_signup h2 {
+        #mc_embed_signup h2,
+        .mc_embed_signup_alt .indicates-required,
+        .mc_embed_signup_alt h2 {
             display: none;
         }
 
-        #mc_embed_signup .mc-field-group {
+        #mc_embed_signup .mc-field-group,
+        .mc_embed_signup_alt .mc-field-group {
             padding-bottom: 0 !important;
             min-height: auto !important;
             width: 100% !important;
         }
 
-        #mc_embed_signup .mc-field-group label {
+        #mc_embed_signup .mc-field-group label,
+        .mc_embed_signup_alt .mc-field-group label {
             display: none;
         }
 
-        #mc_embed_signup .mc-field-group input.email {
+        #mc_embed_signup .mc-field-group input.email,
+        .mc_embed_signup_alt .mc-field-group input.email {
             width: 100% !important;
             padding: 14px !important;
             margin-bottom: 12px !important;
@@ -1031,11 +1038,13 @@
             -webkit-appearance: none;
         }
 
-        #mc_embed_signup .mc-field-group input.email::placeholder {
+        #mc_embed_signup .mc-field-group input.email::placeholder,
+        .mc_embed_signup_alt .mc-field-group input.email::placeholder {
             color: #94a3b8;
         }
 
-        #mc_embed_signup .button {
+        #mc_embed_signup .button,
+        .mc_embed_signup_alt .button {
             width: 100% !important;
             padding: 16px !important;
             font-size: 16px !important;
@@ -1052,21 +1061,25 @@
             margin: 0 !important;
         }
 
-        #mc_embed_signup .button:hover {
+        #mc_embed_signup .button:hover,
+        .mc_embed_signup_alt .button:hover {
             background: var(--primary-dark) !important;
             transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(0, 102, 255, 0.3);
         }
 
-        #mc_embed_signup .optionalParent {
+        #mc_embed_signup .optionalParent,
+        .mc_embed_signup_alt .optionalParent {
             margin-top: 0;
         }
 
-        #mc_embed_signup .clear.foot {
+        #mc_embed_signup .clear.foot,
+        .mc_embed_signup_alt .clear.foot {
             text-align: center;
         }
 
-        #mc_embed_signup .clear.foot p {
+        #mc_embed_signup .clear.foot p,
+        .mc_embed_signup_alt .clear.foot p {
             display: none;
         }
 
@@ -1092,7 +1105,8 @@
             color: #ff6b6b !important;
         }
 
-        #mc_embed_signup div.mce_inline_error {
+        #mc_embed_signup div.mce_inline_error,
+        .mc_embed_signup_alt div.mce_inline_error {
             background-color: transparent !important;
             color: #ff6b6b !important;
             font-weight: 600 !important;
@@ -1100,7 +1114,8 @@
             margin-bottom: 8px !important;
         }
 
-        #mc_embed_signup input.mce_inline_error {
+        #mc_embed_signup input.mce_inline_error,
+        .mc_embed_signup_alt input.mce_inline_error {
             border: 2px solid #ff6b6b !important;
         }
 
@@ -1257,6 +1272,21 @@
                             </div>
                         </form>
                     </div>
+                    <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
+                    <script type="text/javascript">
+                    (function($) {
+                        window.fnames = new Array();
+                        window.ftypes = new Array();
+                        fnames[0]='EMAIL'; ftypes[0]='email';
+                        fnames[1]='FNAME'; ftypes[1]='text';
+                        fnames[2]='LNAME'; ftypes[2]='text';
+                        fnames[3]='ADDRESS'; ftypes[3]='address';
+                        fnames[4]='PHONE'; ftypes[4]='phone';
+                        fnames[5]='BIRTHDAY'; ftypes[5]='birthday';
+                        fnames[6]='COMPANY'; ftypes[6]='text';
+                    }(jQuery));
+                    var $mcj = jQuery.noConflict(true);
+                    </script>
                 </div>
                 <div class="hero-cta" style="margin-top: 20px;">
                     <a href="#features" class="secondary-button">Explore Features</a>
@@ -1505,22 +1535,18 @@
                 <h2>Ready to dive in?</h2>
                 <p>Join the waitlist and be the first to know when SwimFeed launches.</p>
                 <div class="signup-container">
-                    <div id="mc_embed_signup">
-                        <form action="https://gmail.us3.list-manage.com/subscribe/post?u=d223345aa4534fbe825dcadb3&amp;id=5bba50f955&amp;f_id=009030e1f0" method="post" id="mc-embedded-subscribe-form-2" name="mc-embedded-subscribe-form" class="validate" target="_blank">
-                            <div id="mc_embed_signup_scroll_2">
+                    <div id="mc_embed_signup_footer" class="mc_embed_signup_alt">
+                        <form action="https://gmail.us3.list-manage.com/subscribe/post?u=d223345aa4534fbe825dcadb3&amp;id=5bba50f955&amp;f_id=009030e1f0" method="post" name="mc-embedded-subscribe-form-footer" class="validate" target="_blank">
+                            <div>
                                 <div class="mc-field-group">
-                                    <input type="email" name="EMAIL" class="required email" id="mce-EMAIL-2" required="" value="" placeholder="Enter your email">
-                                </div>
-                                <div id="mce-responses-2" class="clear foot">
-                                    <div class="response" id="mce-error-response-2" style="display: none;"></div>
-                                    <div class="response" id="mce-success-response-2" style="display: none;"></div>
+                                    <input type="email" name="EMAIL" class="required email" required="" value="" placeholder="Enter your email">
                                 </div>
                                 <div style="position: absolute; left: -5000px;" aria-hidden="true">
                                     <input type="text" name="b_d223345aa4534fbe825dcadb3_5bba50f955" tabindex="-1" value="">
                                 </div>
                                 <div class="optionalParent">
                                     <div class="clear foot">
-                                        <input type="submit" name="subscribe" id="mc-embedded-subscribe-2" class="button" value="Join Waitlist">
+                                        <input type="submit" name="subscribe" class="button" value="Join Waitlist">
                                     </div>
                                 </div>
                             </div>
@@ -1530,23 +1556,6 @@
             </div>
         </section>
     </main>
-
-    <!-- Mailchimp Validation Script -->
-    <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
-    <script type="text/javascript">
-    (function($) {
-        window.fnames = new Array();
-        window.ftypes = new Array();
-        fnames[0]='EMAIL'; ftypes[0]='email';
-        fnames[1]='FNAME'; ftypes[1]='text';
-        fnames[2]='LNAME'; ftypes[2]='text';
-        fnames[3]='ADDRESS'; ftypes[3]='address';
-        fnames[4]='PHONE'; ftypes[4]='phone';
-        fnames[5]='BIRTHDAY'; ftypes[5]='birthday';
-        fnames[6]='COMPANY'; ftypes[6]='text';
-    }(jQuery));
-    var $mcj = jQuery.noConflict(true);
-    </script>
 
     <!-- Analytics tracking for form submissions -->
     <script>
