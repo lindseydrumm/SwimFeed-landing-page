@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SwimFeed - Your Competitive Swimming Hub</title>
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MCFS48HSYL"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-MCFS48HSYL');
+    </script>
+
     <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@300;400;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
     <style>
         * {
@@ -946,6 +956,36 @@
             }
         }
 
+        /* Signup Form */
+        .signup-container {
+            max-width: 400px;
+            margin: 40px auto 0;
+        }
+
+        .signup-container input[type="email"] {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            font-family: 'Archivo', sans-serif;
+            box-sizing: border-box;
+        }
+
+        .signup-container .cta-button {
+            width: 100%;
+            padding: 16px;
+            font-size: 16px;
+        }
+
+        #custom-success {
+            display: none;
+            margin-top: 20px;
+            color: var(--primary);
+            font-size: 18px;
+        }
+
         /* Responsive */
         @media (max-width: 1024px) {
             .features-grid {
@@ -1069,7 +1109,7 @@
                     <a href="#features">Features</a>
                     <a href="#database">Database</a>
                     <a href="#pricing">Pricing</a>
-                    <button class="cta-button">Get Started</button>
+                    <a href="#mc-embedded-subscribe-form" class="cta-button" style="text-decoration:none;">Join Waitlist</a>
                 </nav>
             </div>
         </div>
@@ -1080,8 +1120,33 @@
             <div class="container">
                 <h1>Every race. Every record.<br><span class="gradient-text">Never miss a split.</span></h1>
                 <p>The complete competitive swimming platform for athletes, coaches, and fans.</p>
-                <div class="hero-cta">
-                    <button class="cta-button">Sign up</button>
+                <div class="signup-container">
+                    <form
+                        action="https://gmail.us3.list-manage.com/subscribe/post?u=d223345aa4534fbe825dcadb3&amp;id=5bba50f955&amp;f_id=009130e1f0"
+                        method="post"
+                        id="mc-embedded-subscribe-form"
+                    >
+                        <input
+                            type="email"
+                            name="EMAIL"
+                            placeholder="Enter your email"
+                            required
+                        >
+                        <!-- bot protection -->
+                        <div style="position:absolute; left:-5000px;" aria-hidden="true">
+                            <input type="text" name="b_d223345aa4534fbe825dcadb3_5bba50f955" tabindex="-1" value="">
+                        </div>
+                        <input
+                            type="submit"
+                            value="Join Waitlist 🚀"
+                            class="cta-button"
+                        >
+                    </form>
+                    <div id="custom-success">
+                        🎉 You're on the waitlist!
+                    </div>
+                </div>
+                <div class="hero-cta" style="margin-top: 20px;">
                     <a href="#features" class="secondary-button">Explore Features</a>
                 </div>
             </div>
@@ -1326,10 +1391,74 @@
         <section class="cta-section">
             <div class="container">
                 <h2>Ready to dive in?</h2>
-                <button class="cta-button">Sign Up Today</button>
+                <p>Join the waitlist and be the first to know when SwimFeed launches.</p>
+                <div class="signup-container">
+                    <form
+                        action="https://gmail.us3.list-manage.com/subscribe/post?u=d223345aa4534fbe825dcadb3&amp;id=5bba50f955&amp;f_id=009130e1f0"
+                        method="post"
+                        class="mc-embedded-subscribe-form"
+                    >
+                        <input
+                            type="email"
+                            name="EMAIL"
+                            placeholder="Enter your email"
+                            required
+                        >
+                        <!-- bot protection -->
+                        <div style="position:absolute; left:-5000px;" aria-hidden="true">
+                            <input type="text" name="b_d223345aa4534fbe825dcadb3_5bba50f955" tabindex="-1" value="">
+                        </div>
+                        <input
+                            type="submit"
+                            value="Join Waitlist 🚀"
+                            class="cta-button"
+                        >
+                    </form>
+                    <div class="custom-success" style="display:none; margin-top:20px; color:var(--primary); font-size:18px;">
+                        🎉 You're on the waitlist!
+                    </div>
+                </div>
             </div>
         </section>
     </main>
+
+    <!-- Mailchimp + Analytics Script -->
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var forms = document.querySelectorAll('#mc-embedded-subscribe-form, .mc-embedded-subscribe-form');
+
+        forms.forEach(function(form) {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                var formData = new FormData(form);
+                var successMessage = form.parentElement.querySelector('#custom-success, .custom-success');
+
+                fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    mode: 'no-cors'
+                })
+                .then(function() {
+                    if (successMessage) {
+                        successMessage.style.display = 'block';
+                    }
+                    form.reset();
+
+                    // Track conversion
+                    if (typeof gtag === 'function') {
+                        gtag('event', 'email_signup', {
+                            method: 'swimfeed'
+                        });
+                    }
+                })
+                .catch(function() {
+                    alert('Something went wrong. Try again.');
+                });
+            });
+        });
+    });
+    </script>
 
     <footer>
         <div class="container">
